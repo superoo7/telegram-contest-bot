@@ -1,12 +1,9 @@
-const telegram = require('node-telegram-bot-api');
+const axios = require('axios');
 const steem = require('steem');
 const dotenv = require('dotenv');
+const querystring = require('querystring');
 
 dotenv.config();
-
-const bot = new telegram(process.env.BOT_KEY, {
-  polling: true
-});
 
 steem.api.streamTransactions('head', function(err, result) {
   if (err) {
@@ -32,9 +29,14 @@ steem.api.streamTransactions('head', function(err, result) {
     ) {
       let link = `@${txData.author}/${txData.permlink}`;
 
-      bot.sendMessage(
-        process.env.CHANNEL_ID,
-        `https://steemit.com/${link}`
+      axios.post(
+        `https://api.telegram.org/bot${
+          process.env.BOT_KEY
+        }/sendMessage`,
+        querystring.stringify({
+          chat_id: process.env.CHANNEL_ID,
+          text: `https://steemit.com/${link}`
+        })
       );
     }
   }
