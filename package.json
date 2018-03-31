@@ -10,6 +10,8 @@
     "steem": "^0.7.1"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/dotenv": "^4.0.2",
     "@types/node": "^9.6.0",
     "tsc-watch": "^1.0.17",
     "typescript": "^2.7.2"
