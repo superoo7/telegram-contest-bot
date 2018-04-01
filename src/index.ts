@@ -39,9 +39,7 @@ steem.api.streamTransactions('head', function(err, result) {
 
     if (
       // @ts-ignore
-      tags.includes('teammalaysiadevtest') &&
-      // @ts-ignore
-      tags.includes('teammalaysia')
+      tags.includes('teammalaysia') && (tags.includes('contest') || tags.includes('raffle') || tags.includes('upfundme'))
     ) {
       save(`@${txData.author}/${txData.permlink}`)
         .then((isSaved) => {
