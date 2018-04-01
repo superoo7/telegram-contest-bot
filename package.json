@@ -12,12 +12,14 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/dotenv": "^4.0.2",
-    "@types/node": "^9.6.0",
+    "@types/node": "^9.6.1",
     "tsc-watch": "^1.0.17",
     "typescript": "^2.7.2"
   },
   "scripts": {
-    "build": "tsc src/index.ts --outDir ./dist",
-    "dev": "tsc-watch src/index.ts --outDir ./dist --onSuccess \"node ./dist/index.js\" --onFailure \"echo Compilation Failed\""
-  }
+    "build": "tsc",
+    "dev": "tsc-watch src/index.ts --outDir ./dist --onSuccess \"node ./dist/index.js\" --onFailure \"echo Compilation Failed\"",
+    "test": "tsc-watch src/test/index.ts --outDir ./dist --onSuccess \"node ./dist/test/index.js\" --onFailure \"echo Compilation Failed\""
+  },
+  "author": "Lai Weng Han <jlwhoo7@gmail.com>"
 }

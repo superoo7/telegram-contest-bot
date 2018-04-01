@@ -1,7 +1,10 @@
-import axios from 'axios';
+// lib
 import * as steem from 'steem';
 import dotenv = require('dotenv');
-import * as querystring from 'querystring';
+
+// src
+import api from './api';
+import save from './save';
 
 dotenv.config();
 
@@ -10,6 +13,7 @@ interface TX_DATA {
   parent_permlink: string;
   author: string;
   permlink: string;
+  title: string;
   body: string;
   json_metadata: string;
 }
@@ -34,25 +38,19 @@ steem.api.streamTransactions('head', function(err, result) {
     }
 
     if (
-      tags.includes('contest') &&
+      // @ts-ignore
+      tags.includes('teammalaysiadevtest') &&
+      // @ts-ignore
       tags.includes('teammalaysia')
     ) {
-      let link: string = `@${txData.author}/${txData.permlink}`;
-
-      let {BOT_KEY: botKey, CHANNEL_ID: chatId} = process.env;
-
-      axios.post(
-        `https://api.telegram.org/bot${
-          process.env.botKey
-        }/sendMessage`,
-        querystring.stringify({
-          chat_id: chatId,
-          text: `https://steemit.com/${link}`
+      save(`@${txData.author}/${txData.permlink}`)
+        .then((isSaved) => {
+          if (!!isSaved) {
+            api(txData)
+              .then(() => console.log('send to telegram'))
+              .catch((err: any) => console.error(err));
+          };
         })
-      ).then(
-        () => console.log('success')
-      ).catch((err) => console.error(err));
-
     }
   }
 });
