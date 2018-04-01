@@ -2,9 +2,13 @@
 
 This is a bot that watch for a certain tag and announce it at Telegram Broadcast Channel.
 
+# Language:
+
+* Typescript
+
 # Library used:
 
-* node-telegram-bot-api
+* axios
 * steem
 * dotenv
 
@@ -28,6 +32,6 @@ if (
     )
 ```
 
-* To run it, just `node index.js`.
+* To run it, just `tsc && node dist/index.js`.
 
 For production, you can use the PM2 library.
